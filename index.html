@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>نمایش دو ایده | سرمایه‌گذاری هوشمند</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(145deg, #f7fafc 0%, #edf2f7 100%);
+        font-family:
+          "Inter",
+          "Vazir",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        padding: 2rem 1.5rem;
+        min-height: 100vh;
+        color: #1a202c;
+      }
+
+      /* smooth container */
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      /* header with subtle glow */
+      .hero {
+        text-align: center;
+        margin-bottom: 4rem;
+        position: relative;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #0f2b3d, #1b4f6e, #0f2b3d);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 6s infinite linear;
+        letter-spacing: -0.02em;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: #2d3e50;
+        max-width: 650px;
+        margin: 1rem auto 0;
+        opacity: 0.85;
+        font-weight: 400;
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(27, 79, 110, 0.12);
+        backdrop-filter: blur(4px);
+        padding: 0.3rem 1.2rem;
+        border-radius: 40px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #1b4f6e;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(27, 79, 110, 0.25);
+      }
+
+      /* grid for two ideas */
+      .ideas-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        margin: 2rem 0 4rem;
+      }
+
+      /* card style - glassmorphism + elegance */
+      .idea-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(2px);
+        border-radius: 3rem;
+        box-shadow:
+          0 25px 45px -12px rgba(0, 0, 0, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.02);
+        transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .idea-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 35px 55px -18px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.98);
+        border-color: rgba(27, 79, 110, 0.3);
+      }
+
+      /* header of each card */
+      .card-header {
+        padding: 2rem 2rem 1rem 2rem;
+        border-bottom: 2px solid #e9eef3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .idea-number {
+        font-size: 0.85rem;
+        font-weight: 700;
+        background: #eef2ff;
+        padding: 0.3rem 1rem;
+        border-radius: 60px;
+        color: #1b4f6e;
+        letter-spacing: 0.3px;
+      }
+
+      .status-badge {
+        font-size: 0.75rem;
+        background: #e6f7ec;
+        color: #1f6e43;
+        padding: 0.25rem 1rem;
+        border-radius: 40px;
+        font-weight: 600;
+      }
+
+      /* content area - where you insert your idea */
+      .idea-content {
+        padding: 2rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .idea-placeholder {
+        background: #f8fafd;
+        border-radius: 1.75rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        border: 1px dashed #cbd5e1;
+        transition: all 0.2s;
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .idea-placeholder svg {
+        opacity: 0.5;
+        margin-bottom: 1rem;
+      }
+
+      .idea-placeholder p {
+        color: #5b6e8c;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* for actual content (when you fill it) — supports images, text, lists */
+      .idea-content-filled {
+        width: 100%;
+      }
+
+      .idea-content-filled img,
+      .idea-content-filled video {
+        max-width: 100%;
+        border-radius: 1.5rem;
+        margin: 0.5rem 0;
+      }
+
+      .idea-content-filled h3 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #0b2b3b;
+        margin-bottom: 0.75rem;
+      }
+
+      .idea-content-filled p {
+        line-height: 1.6;
+        color: #2c3e44;
+        margin-bottom: 1rem;
+      }
+
+      .metrics {
+        background: #f0f4f9;
+        border-radius: 1.5rem;
+        padding: 1rem 1.5rem;
+        margin-top: 1rem;
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        border: 1px solid #e2e8f0;
+      }
+
+      .metric-item {
+        flex: 1;
+        text-align: center;
+      }
+
+      .metric-value {
+        font-weight: 800;
+        font-size: 1.35rem;
+        color: #1b4f6e;
+      }
+
+      .metric-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #5f7f9e;
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1.5px solid #1b4f6e;
+        padding: 0.6rem 1.2rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        color: #1b4f6e;
+        transition: 0.2s;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.85rem;
+        margin-top: 1rem;
+        align-self: flex-start;
+      }
+
+      .btn-outline:hover {
+        background: #1b4f6e;
+        color: white;
+      }
+
+      /* footer */
+      .footer-note {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        color: #5a6e85;
+        font-size: 0.85rem;
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .ideas-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        body {
+          padding: 1.5rem;
+        }
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+        .card-header {
+          padding: 1.5rem 1.5rem 0.75rem;
+        }
+        .idea-content {
+          padding: 1.5rem;
+        }
+      }
+
+      /* smooth entry */
+      .idea-card {
+        opacity: 0;
+        animation: fadeSlideUp 0.6s ease forwards;
+      }
+
+      .idea-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .idea-card:nth-child(2) {
+        animation-delay: 0.25s;
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* custom scroll */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #8ca3ba;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="hero">
+        <div class="badge">✨ چشم‌انداز سرمایه‌گذاری | پلتفرم نسل نو</div>
+        <h1>دو ایده · یک مسیر رشد</h1>
+      </div>
+
+      <div class="ideas-grid">
+        <!-- CARD 1: جای خالی ایده اول -->
+        <div class="idea-card" id="ideaCard1">
+          <div class="card-header">
+            <span class="idea-number">ایده شماره ۱</span>
+            <span class="status-badge">آماده برای سرمایه‌گذاری</span>
+          </div>
+          <div class="idea-content" id="ideaContent1">
+            <!-- این بخش را می‌توانید به دلخواه پر کنید: مپروژه ی اتوتریدر: سه فاز اصلی داریم ک فاز 1 و 2 باهم هستن و فاز 3 در اینده خواهد امد فاز اول: کاربر نسبت به پلنی ک انتخاب میکنه کوین های خودش رو انتخاب میکنه پلن پرو 5 کوین و پلن سوپر پرو 12 کوین. سپس قیمت 24 ساعته هر کوین و قیمتش قابل دید هست و در کنار این ها یک کندل وجود داره ک در پلن اول 24 ساعته اس و در پلن دوم یک تایم فریم اضافه به انتخاب کاربر و در کنار این کندل هوش مصنوعی با در نظر گرفتن داده هایی ک بهش میرسه سه متن تولید میکنه در قالب احساسات بازار و تحلیل بازار و هشدار بازار . فاز دوم: ریسرچر اوتومات . هوش مصنوعی باتوجه به داده های خبری و قیمتی ای ک بهش میدیم اخبار 12 ساعت اخیر رو به کاربر میرسونه و کاربر و هوش مصنوعی میتونن راجب هر خبری ک کاربر بخواد صحبت و تحلیل کنن . در پشت صحنه این داستان ما سه دسته خبری داریم غیرضروری و مهم و خیلی مهم که با انتخاب خود کاربر ما هر دسته از خبر هارو خواست بهش میرسونیم تصور کن 10 خبر لیست میشه ک 5 تاش خیلی مهم هست و 4 تاش مهم و یکش غیر ضروری و زیر هر کدوم ریپلای هست ک کاربر هر کدوم از تاپیک و اخبارو رو خواست هوش مصنوعی مفصل تر براش توضیح بده و تحیلیل کنه . فاز سوم: در این فاز ما ایجنت های معاملاتی داریم ک با مدیریت خود کاربر تولید میشه و در شبیه ساز تست میشه و بعد از اون وارد بازار میشه و ریسک منیجنت و پوزیشن منیجمنت و ... با تایین کردن خود کاربر هست ضمن اینکه تیم ما هم ایجنت های اماده و تست شده رو دارن . و در پشت پرده این موضوع ما یک سیستمی داریم ک عملکرد ایجنت هارو برسی و ثبت میکنه و در ایندع احتمالا تبادل ایجنت وجود داشته باشه بین کاربر ها یا اگر هم وجود نداشته باشه دیتای ما بیشتر میشه .تن، عکس، جدول کوچک، هر چیزی -->
+            <div class="idea-placeholder" id="placeholder1">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  fill="#9aaebf"
+                />
+              </svg>
+              <p style="font-weight: 500">
+                پروژه ی اتوتریدر: سه فاز اصلی داریم ک فاز 1 و 2 باهم هستن و فاز
+                3 در اینده خواهد امد فاز اول: کاربر نسبت به پلنی ک انتخاب میکنه
+                کوین های خودش رو انتخاب میکنه پلن پرو 5 کوین و پلن سوپر پرو 12
+                کوین. سپس قیمت 24 ساعته هر کوین و قیمتش قابل دید هست و در کنار
+                این ها یک کندل وجود داره ک در پلن اول 24 ساعته اس و در پلن دوم
+                یک تایم فریم اضافه به انتخاب کاربر و در کنار این کندل هوش مصنوعی
+                با در نظر گرفتن داده هایی ک بهش میرسه سه متن تولید میکنه در قالب
+                احساسات بازار و تحلیل بازار و هشدار بازار . فاز دوم: ریسرچر
+                اوتومات . هوش مصنوعی باتوجه به داده های خبری و قیمتی ای ک بهش
+                میدیم اخبار 12 ساعت اخیر رو به کاربر میرسونه و کاربر و هوش
+                مصنوعی میتونن راجب هر خبری ک کاربر بخواد صحبت و تحلیل کنن . در
+                پشت صحنه این داستان ما سه دسته خبری داریم غیرضروری و مهم و خیلی
+                مهم که با انتخاب خود کاربر ما هر دسته از خبر هارو خواست بهش
+                میرسونیم تصور کن 10 خبر لیست میشه ک 5 تاش خیلی مهم هست و 4 تاش
+                مهم و یکش غیر ضروری و زیر هر کدوم ریپلای هست ک کاربر هر کدوم از
+                تاپیک و اخبارو رو خواست هوش مصنوعی مفصل تر براش توضیح بده و
+                تحیلیل کنه . فاز سوم: در این فاز ما ایجنت های معاملاتی داریم ک
+                با مدیریت خود کاربر تولید میشه و در شبیه ساز تست میشه و بعد از
+                اون وارد بازار میشه و ریسک منیجنت و پوزیشن منیجمنت و ... با
+                تایین کردن خود کاربر هست ضمن اینکه تیم ما هم ایجنت های اماده و
+                تست شده رو دارن . و در پشت پرده این موضوع ما یک سیستمی داریم ک
+                عملکرد ایجنت هارو برسی و ثبت میکنه و در ایندع احتمالا تبادل
+                ایجنت وجود داشته باشه بین کاربر ها یا اگر هم وجود نداشته باشه
+                دیتای ما بیشتر میشه .
+              </p>
+            </div>
+            <!-- شما بعداً می‌توانید div بالا را حذف کرده و محتوای واقعیتان را بنویسید -->
+          </div>
+          <div style="padding: 0 2rem 2rem 2rem"></div>
+        </div>
+
+        <!-- CARD 2: جای خالی ایده دوم -->
+        <div class="idea-card" id="ideaCard2">
+          <div class="card-header">
+            <span class="idea-number">ایده شماره ۲</span>
+            <span class="status-badge">پتانسیل بالا</span>
+          </div>
+          <div class="idea-content" id="ideaContent2">
+            <div class="idea-placeholder" id="placeholder2">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 6h-2v2h-2V6h-2V4h2V2h2v2h2v2zm-10 3c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 4c-2.33 0-7 1.17-7 3.5V17h14v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                  fill="#9aaebf"
+                />
+              </svg>
+              <p style="font-weight: 500">
+                گاتس یک پلتفرم سه لایه برای کاربران ایرانی است که می‌خواهند بدون
+                دانش فنی پیچیده، در بازار رمزارزها تصمیم‌های بهتری بگیرند. حداقل
+                محصول شدنی (نسخه اولیه) در نسخه اولیه، سه بخش اصلی به کاربر
+                ارائه می‌شود. بخش اول حسگر بازار نام دارد. کاربر می‌تواند احساس
+                کلی بازار را برای ده رمزارز برتر به صورت یک نوار سه رنگ ببیند.
+                رنگ سبز یعنی بازار صعودی، رنگ قرمز یعنی بازار نزولی، و رنگ
+                خاکستری یعنی بازار خنثی است. در کنار این نوار، هوش مصنوعی سه
+                جمله کوتاه تولید می‌کند. جمله اول خلاصه وضعیت بازار در ده کلمه
+                است. جمله دوم تحلیل کوتاهی از دلیل این وضعیت است. جمله سوم یک
+                هشدار عملی شامل سطح قیمتی مهم یا ریسک احتمالی را نشان می‌دهد. یک
+                نمودار شمعی ساده نیز برای بازه بیست و چهار ساعته در کنار این بخش
+                قرار دارد. بخش دوم خبرچین هوشمند است. کاربر می‌تواند در یک صفحه
+                گفتگو به زبان فارسی سوال خود را بپرسد. سه دکمه پیشنهادی برای
+                شروع سریع مکالمه وجود دارد: آخرین خبر بیت‌کوین، دلیل تغییر قیمت
+                اتریوم، و خلاصه مهم‌ترین اخبار دوازده ساعت اخیر. در پشت صحنه،
+                هوش مصنوعی از بین انبوه اخبار، فقط مهم‌ترین آنها را انتخاب و
+                خلاصه می‌کند. کاربر هرگز خبر تکراری یا غیرضروری نمی‌بیند. همچنین
+                کاربر می‌تواند هر خبر را ذخیره کند یا از هوش مصنوعی بخواهد بعداً
+                یادآوری کند. بخش سوم دستیار سبک معاملاتی است. سه دستیار از پیش
+                آماده با نام‌های لاک‌پشت، پلنگ و نهنگ در اختیار کاربر قرار
+                می‌گیرد. دستیار لاک‌پشت برای ریسک بسیار کم مناسب است و فقط
+                معاملات خرید انجام می‌دهد. دستیار پلنگ برای ریسک متوسط طراحی شده
+                و هم معاملات خرید و هم معاملات فروش استقراضی را پوشش می‌دهد.
+                دستیار نهنگ برای ریسک بالا مناسب است. یک محیط شبیه‌ساز به کاربر
+                نشان می‌دهد که هر یک از این سه دستیار در سه روز گذشته چگونه عمل
+                کرده‌اند. یک سیستم ثبت امتیاز نیز برای هر دستیار فعال است تا
+                کاربر بتواند بهترین را انتخاب کند. مدل اشتراک به این شکل است.
+                کاربران رایگان به سه رمزارز، ده سوال روزانه در خبرچین و فقط
+                دستیار لاک‌پشت دسترسی دارند. کاربران حرفه‌ای به بیست رمزارز،
+                سوال نامحدود در خبرچین، هر سه دستیار و شبیه‌ساز کامل دسترسی پیدا
+                می‌کنند. فاز یک؛ اکوسیستم در حال رشد شش تا دوازده ماه پس از
+                حداقل محصول، امکانات جدیدی اضافه می‌شود. کاربران می‌توانند
+                دستیار شخصی خود را بسازند. آنها می‌توانند حد سود، حد ضرر، تعداد
+                معاملات روزانه و سبک ورود و خروج را خودشان تعیین کنند. سپس این
+                دستیار را در بازارچه گاتس به دیگر کاربران اجاره دهند. یک سیستم
+                رتبه‌بندی عمومی نشان می‌دهد که کدام دستیارها بهترین عملکرد را
+                دارند. معیارهای رتبه‌بندی شامل درصد سود، حداکثر ضرر تاریخی،
+                تعداد معاملات موفق و امتیاز اعتماد کاربران است. همچنین کاربران
+                می‌توانند کلید اتصال صرافی‌های داخلی مانند نوبیتکس یا والکس را
+                وارد کنند و دستیار معاملاتی به صورت خودکار معاملات واقعی را
+                انجام دهد. فاز دو؛ اجتماع معامله‌گران هوشمند دوازده تا بیست و
+                چهار ماه پس از حداقل محصول، گاتس به یک اجتماع زنده تبدیل می‌شود.
+                کاربران می‌توانند استراتژی دستیار یک کاربر حرفه‌ای را دنبال کنند
+                و معاملات او را کپی نمایند. همچنین امکان تشکیل تیم‌های پنج نفره
+                برای رقابت در چالش‌های هفتگی وجود دارد. به تیم برنده هر هفته،
+                اشتراک رایگان ماه بعد تعلق می‌گیرد. یک ارز داخلی به نام گاتس
+                معرفی می‌شود که کاربران می‌توانند با ریال بخرند و برای خرید
+                اشتراک، اجاره دستیار یا شرکت در چالش‌های ویژه استفاده کنند. گاتس
+                هر ماه مقداری از سود خود را به صورت این ارز بین کاربران فعال
+                توزیع می‌کند. همچنین برنامه‌نویسان مستقل می‌توانند دستیار
+                معاملاتی خود را بسازند و در بازارچه گاتس ثبت کنند. کاربران
+                می‌توانند هشدارهای دستیار معاملاتی را در پیام‌رسان‌های ایرانی
+                مانند روبیکا، سروش یا ایتا دریافت کنند بدون اینکه نیاز به باز
+                کردن برنامه گاتس داشته باشند. فاز سه؛ لایه هوشمند کل بازار ایران
+                بیش از دو سال پس از حداقل محصول، گاتس از یک ابزار رمزارزی به
+                پلتفرمی برای تمام بازارهای ایران تبدیل می‌شود. کاربران می‌توانند
+                دستیارهای معاملاتی را برای سهام بورس تهران، طلا، دلار آزاد و
+                خودرو نیز تنظیم کنند. هوش مصنوعی گاتس اخبار و قیمت‌های این
+                بازارها را نیز تحلیل می‌کند. دستیارها دیگر ثابت نیستند. هر
+                دستیار با هر بار معامله، از اشتباهات خود یاد می‌گیرد و استراتژی
+                خود را به روز می‌کند. کاربر می‌تواند ببیند دستیارش در سه ماه
+                گذشته چه چیزهایی یاد گرفته است. یک بازار پیش‌بینی نیز راه
+                می‌افتد که در آن کاربران می‌توانند با ارز داخلی گاتس روی
+                رویدادهای آینده شرط بندی کنند. بخشی از فرآیندها نیز غیرمتمرکز
+                می‌شوند تا حتی اگر سرورهای گاتس برای مدتی قطع شوند، کاربران
+                همچنان بتوانند از دستیارهای خود استفاده کنند.
+              </p>
+            </div>
+          </div>
+          <div style="padding: 0 2rem 2rem 2rem"></div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        ⚡ هر دو ایده قابلیت توسعه در بازار ایران و بین‌المللی را دارند • برای
+        جلسه سرمایه‌گذاری با ما تماس بگیرید
+      </div>
+    </div>
+
+    <script>
+      // یک اسکریپت کوچک برای کمک به شما: اگر خواستید placeholderها را با محتوای واقعی جایگزین کنید
+      // فقط کافیست المنت placeholder1 یا placeholder2 را حذف کرده و HTML جدید بنویسید.
+      // همچنین می‌توانید از این تابع استفاده کنید تا داینامیک محتوای ایده را تغییر دهید.
+
+      // مثال: تابع کمکی برای جایگزینی محتوای ایده اول (در کنسول مرورگر هم قابل استفاده است)
+      window.setIdeaContent = function (ideaNumber, htmlContent) {
+        const contentDiv =
+          ideaNumber === 1
+            ? document.getElementById("ideaContent1")
+            : document.getElementById("ideaContent2");
+        if (contentDiv) {
+          // پاک کردن placeholder یا هر محتوای قبلی
+          contentDiv.innerHTML = "";
+          const newWrapper = document.createElement("div");
+          newWrapper.className = "idea-content-filled";
+          newWrapper.innerHTML = htmlContent;
+          contentDiv.appendChild(newWrapper);
+        }
+      };
+
+      // همینطور برای راحتی شما، یک مثال پیش‌فرض از چیدمان محتوای حرفه‌ای (فقط جهت نمایش)
+      // اگر خواستید می‌توانید از آن استفاده کنید:
+      const sampleIdeaHTML = `
+        <h3>نام استراتژیک ایده</h3>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. این ایده قابلیت جذب بازار هدف میلیاردی را دارد.</p>
+        <div class="metrics">
+            <div class="metric-item"><div class="metric-value">۴۸٪</div><div class="metric-label">نرخ رشد سالانه</div></div>
+            <div class="metric-item"><div class="metric-value">۳.۲x</div><div class="metric-label">بازگشت سرمایه تخمینی</div></div>
+            <div class="metric-item"><div class="metric-value">۶ ماهه</div><div class="metric-label">تا MVP</div></div>
+        </div>
+        <p><strong>مزیت رقابتی:</strong> استفاده از هوش مصنوعی اختصاصی و تطابق با نیاز بومی بازار ایران.</p>
+    `;
+
+      // در صورت تمایل می‌توانید با取消 کامنت خط پایین، یک نمونه نمایش دهید (فعلا غیرفعال)
+      // setTimeout(() => setIdeaContent(1, sampleIdeaHTML), 100);
+
+      // برای راحتی کار شما یک پیام در کنسول چاپ می‌شود
+      console.log(
+        "✅ صفحه آماده است — دو جای خالی برای ایده‌های شما طراحی شده. برای پر کردن، placeholderها را با محتوای دلخواه جایگزین کنید.",
+      );
+    </script>
+  </body>
+</html>
